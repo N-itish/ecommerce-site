@@ -1,0 +1,41 @@
+.form{
+   border: 1px solid black;
+   margin-top: 5%;
+   padding-top: 80px;
+   padding-bottom: 80px;
+   padding-left: 30px;
+   padding-right: 30px;
+   margin-left: 500px;
+   margin-right: 500px;
+}
+
+.form-register{
+   margin-top: 2%;
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+
+.form-profile{
+   padding-top: 40px;
+   padding-left: 50px;
+   padding-right: 50px;
+   margin-left: 100px; 
+   margin-right: 100px;
+   margin-bottom: 100px;
+}
+
+.form-admin{
+   margin-left: 100px;
+   margin-right: 100px;
+}
+
+.form-admin-edit{
+   margin-top: 40px;
+}
+
+.form-product{
+   padding-top: 30px;
+   margin-left:400px;
+   margin-bottom: 20px;
+   margin-top: 25px;
+}

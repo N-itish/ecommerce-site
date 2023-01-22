@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Add Products</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+		integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+	<link th:href="@{/styles/form.css}" rel="stylesheet" />
+	<link th:href="@{/styles/prod-desc.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{/js/counter.js}"></script>
+</head>
+
+<body>
+	<div th:replace="header-footer/header-fragment :: header">
+    </div>
+	<div class="form form-product">
+			<form action="#" th:object = "${productOrder}" 
+			th:with="user_name=${#authentication.getPrincipal().getUsername()}"
+			th:action="@{'/order/user/'+${user_name}+'/add-item/'+${orderTrackingNo}}" method="POST">
+				<div th:if="${#strings.toString(productOrder.stockStatus) == 'AVILABLE'}">
+					<div class="row">
+						<div class="col">
+							<h3><input type="text" th:field="*{name}" readonly></h3>
+							<img th:src="${productOrder.imageUrl}" class="img"><br>
+							<label class=" col-form-label">price: Rs.
+								<span><input type="text" th:field="*{unitPrice}" readonly>
+								</span> Per Unit
+							</label>
+						</div>
+						<div class="desc">
+							<p th:text="${productOrder.description}"></p>
+						</div>
+						Quanity:
+						<div>
+							<button class="btn btn-primary" type="button" onclick="increment()">+</button>
+							<input type="text" id="quantity" th:field="*{quantity}">
+							<button class="btn btn-primary" type="button" onclick="decrement()">-</button>
+							<button class="btn btn-success" type="submit" th:disabled="${orderPurchaseStatus}">Add</button> <br>
+						</div>
+					</div>
+				</div>
+				<div th:unless="${#strings.toString(productOrder.stockStatus) == 'AVILABLE'}">
+					<div class="alert alert-danger">Product is not yet avilable</div>
+				</div><br>
+				<a class="btn btn-primary" th:href="@{'/ecommercesite'+'?orderTrackingNo='+${orderTrackingNo}}">Go Back</a> <p></p>
+				<div th:if="${param.insertStatus != null}">
+					<div th:if="${param.insertStatus}">
+						<p class="alert alert-success">Successfully Added</p>
+					</div>
+					<div th:unless="${param.insertStatus}">
+						<p class="alert alert-danger"> There was some issue. Please try again!!</p>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

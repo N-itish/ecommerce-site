@@ -1,0 +1,33 @@
+<div th:fragment="user-orders" th:object="${Orders}" class="form form-profile">
+    <h4>Orders:</h4>
+    <hr><br>
+
+    <table class="table table-hover">
+        <tr>
+            <th>No</th>
+            <th>Items </th>
+            <th>Order Tracking No</th>
+            <th></th>
+        </tr>
+        <tr th:each="order,itemStat: ${Orders}">
+                <td th:text="${itemStat.index+1}"></td>
+                <td>
+                    <a href="#" style="text-decoration:none; color:black"
+                    th:with="user_name=${#authentication.getPrincipal().getUsername()}"
+                    th:href="@{'/profile/order/'+${order.orderTrackingNumber}+'/orderItems/user/'+${user_name}}+'/prev/'+${orderTrackingNo}">
+                        <span th:each="orderitem: ${order.orderItems}">
+                        <span th:text="${orderitem.name}"></span> -
+                        <span th:with="quantity=${orderitem.quantity}"
+                            th:text=" ${#numbers.formatDecimal(quantity, 0, 0)}"></span>,
+                        </span>
+                    </a>
+                </td>
+                <td th:text="${order.orderTrackingNumber}"></td>
+                <td><a  class="btn btn-primary" th:with="user_name=${#authentication.getPrincipal().getUsername()}" 
+                    th:href="@{'/order/purchase/user/'+${user_name}+'/orderId/'+${order.orderTrackingNumber}}" 
+                    th:classappend="${order.orderPurchased} ? 'disabled'">Purchase
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>

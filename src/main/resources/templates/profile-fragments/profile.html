@@ -1,0 +1,21 @@
+<div th:fragment="user-profile" th:object="${customer}" class="form form-profile">
+    <h3>Profile</h3>
+    <form>
+        <div class="form-group">
+            <label for="userName" class="col-sm-2 col-form-label">Name:</label>
+            <input type="text" th:value="${customer.name}" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+            <input type="text" th:value="${customer.email}" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="address" class="col-sm-2 col-form-label">Address:</label>
+            <input type="text" th:value="${customer.address}" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 col-form-label">Phone No:</label>
+            <input type="text" th:value="${customer.phoneNo}" class="form-control" readonly>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,40 @@
+<div th:fragment="user-order-items" th:object="${Order}" class="form form-profile">
+    <h3>Your Orders:</h3><hr>
+    <form th:with="user_name=${#authentication.getPrincipal().getUsername()}" th:object= "${purchaseOrder}" th:action="@{'/order/purchase/user/'+${user_name}}"
+        method="POST">
+        <table  class="table">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>UnitPrice</th>
+                <th>Quantity</th>
+                <th>Total Cost</th>
+            </tr>
+             <tr th:each="orderitem,itemStat : ${Order.orderItems}">
+                <td th:text="${itemStat.index+1}"></td>
+                <td th:text="${orderitem.name}" ></td> 
+                <td th:text="${orderitem.unitPrice}" ></td>
+                <td th:text="${orderitem.quantity}" ></td>
+                <td th:text = "${orderitem.unitPrice * orderitem.quantity}"></td> 
+            </tr> 
+            <tr>
+                <td></td>
+                <td><h4>Total:</h4></td>
+                <td></td>
+                <td th:text="${Order.totalQuantity}"></td>
+                <td th:text="${Order.totalPrice}"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a class="btn btn-primary"
+                    th:with="user_name=${#authentication.getPrincipal().getUsername()}" 
+                    th:href="@{'/order/purchase/user/'+${user_name}+'/orderId/'+${Order.orderTrackingNumber}}"
+                    th:classappend="${Order.orderPurchased} ? 'disabled'" >
+                    Purchase</a></td>
+            </tr>
+        </table>
+    </form>
+</div>

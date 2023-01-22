@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+		integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+	<link th:href="@{/styles/prod-desc.css}" rel="stylesheet" />
+	<title>Ecommerce Site</title>
+</head>
+
+<body>
+	<div th:replace="header-footer/header-fragment :: header">
+    </div>
+	
+	<div class="container">
+		<h2>Categories:</h2><br>
+
+		<div th:each="categroy: ${categories}" style="margin-top: 20px;">
+			<h4 th:text="${categroy.categoryName}"></h4><br>
+			<div class="row">
+				<div th:each="product: ${categroy.products}" class="col-sm">
+					<span class="card" style="width: 18rem;">
+						<img class="card-img-top" th:src="${product.imageUrl}" th:alt="${product.name}">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${product.name}">Default Title</h5>
+							<p class="card-text" th:text="${product.description}">Default Description</p>
+							<a href="#" class="btn btn-primary"
+								th:href="@{'/order/order-form/'+${product.name}}+'/orderId/'+${orderTrackingNo}">Buy</a>
+						</div>
+					</span>
+				</div><br>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
