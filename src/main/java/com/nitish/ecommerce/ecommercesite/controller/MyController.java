@@ -1,7 +1,5 @@
 package com.nitish.ecommerce.ecommercesite.controller;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.nitish.ecommerce.ecommercesite.dto.UserProfile;
 import com.nitish.ecommerce.ecommercesite.service.ProductService;
 import com.nitish.ecommerce.ecommercesite.service.UserService;
-import com.nitish.ecommerce.ecommercesite.entity.OrderItem;
 
 @Controller
 public class MyController {
@@ -51,25 +47,12 @@ public class MyController {
 
 	@PostMapping("/register")
 	public String registerUser(@Valid UserProfile user,BindingResult result,Model model){
+		System.out.println("MyController : registerUser username="+user.getName());
 		if(result.hasErrors()){
-			System.out.println("Register has errors");
 			return "register-form";
 		}
 		userService.saveUser(user);
 		return "redirect:/login-form";
-	}
-
-	//testing random function
-	@GetMapping("/test")
-	public String test(Model model){
-		List<OrderItem> myList= new ArrayList<OrderItem>();
-		OrderItem newItem = new OrderItem();
-		newItem.setName("test");
-		newItem.setId(1);
-		newItem.setQuantity(BigDecimal.valueOf(23));
-		myList.add(newItem);
-		model.addAttribute("test", newItem);
-		return "test";
 	}
 }
 

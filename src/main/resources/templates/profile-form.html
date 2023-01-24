@@ -26,7 +26,6 @@
             </ul>
         </div>
         <div class="col-sm">
-            Welcome <span sec:authentication="name"></span>!!
             <div th:if="${customer.name != null}"> 
                 <div th:replace="profile-fragments/profile :: user-profile"></div>
              </div>

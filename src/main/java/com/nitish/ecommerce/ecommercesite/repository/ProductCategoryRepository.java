@@ -10,5 +10,4 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     @Query("select c.categoryName from ProductCategory c")
     public List<String> getCategoryNames();
 
-    public ProductCategory findByCategoryName(String categoryName);
 }

@@ -29,24 +29,25 @@ public class OrderController {
     
     @Autowired
     private OrderService orderService;
-
-    @PostMapping({"/order-form/{product_name}","/order-form/{product_name}/orderId/{orderTrackingNo}"})
+    //order-form/'+${product.name}}+'/orderId/'+${orderTrackingNo}
+    @PostMapping({"/order-form/{product_name}","/order-form/{productName}/orderId/{orderTrackingNo}"})
 	public String getProductsOrderForm(
         @AuthenticationPrincipal MyPrincipal principal,
         @RequestParam(name = "status",required= false) boolean insertStatus,
-        @PathVariable("product_name") String productName,Model model,
+        @PathVariable("categoryName") String categoryName,
+        @PathVariable("productName") String productName,Model model,
         @PathVariable(value = "orderTrackingNo",required = false) String orderTrackingNo
      ){
 		ProductOrder calledProduct = orderService.getProductOrder(productName);
+        System.out.println("OrderController: getProductOrderForm reached after calledProduct");
         Order order = orderService.getOrderByUserName(principal.getUsername(), orderTrackingNo);
         if(orderTrackingNo == null){
             orderTrackingNo = order.getOrderTrackingNumber();
         }
         model.addAttribute("orderPurchaseStatus", order.isOrderPurchased());
 		model.addAttribute("productOrder", calledProduct);
-        model.addAttribute("insertStatus", insertStatus);
         model.addAttribute("orderTrackingNo", orderTrackingNo);
-		return "product-description";
+		return "product-desc";
 	}
     
 
@@ -58,13 +59,18 @@ public class OrderController {
         RedirectAttributes attributes
      ){
         OrderItem item = mapper.map(productOrder, OrderItem.class);
-        //just storing the order item in the order -- not inserting into database
-        System.out.println(orderTrackingNo);
-        String ordTrcNo = this.orderService.addItemNew(username,orderTrackingNo,item);
+        boolean insertedStatus = false;
+        String ordTrcNo = null;
+        try {
+            ordTrcNo = this.orderService.addItemNew(username,orderTrackingNo,item);
+            insertedStatus = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         attributes.addAttribute("orderTrackingNo",ordTrcNo);
-        
+        attributes.addAttribute("insertStatus",insertedStatus);
         //redirecting the user to the main page after inserting item
-        return "redirect:/";
+        return "redirect:/admin/dashboard";
 
     }
 

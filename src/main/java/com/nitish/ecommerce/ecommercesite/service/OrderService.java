@@ -1,13 +1,9 @@
 package com.nitish.ecommerce.ecommercesite.service;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +37,7 @@ public class OrderService {
         return orderItem;
     }
 
-    public String addItemNew(String customerName, String orderTrackingNo, OrderItem item) {
+    public String addItemNew(String customerName, String orderTrackingNo, OrderItem item) throws Exception{
         Order order = getOrderByUserName(customerName, orderTrackingNo);
         saveOrderItem(customerName, order, item);
         return order.getOrderTrackingNumber();
@@ -78,9 +74,7 @@ public class OrderService {
         Customer customer = customerRepo.findByName(userName);
         if (customer != null) {
             //filtering the output by orderTrackingNo
-            Optional<Order> filteredOrders = customer.getOrders().stream().filter(
-                    x -> x.getOrderTrackingNumber().equalsIgnoreCase(orderTrackingNo))
-                    .findAny();
+            Optional<Order> filteredOrders = filterOrder(orderTrackingNo, customer);
             if (filteredOrders.isPresent()) {
                 //if order present then calculating the total and quantity
                 order = calculateTotalAndQuantity(filteredOrders.get());
@@ -108,9 +102,7 @@ public class OrderService {
 
     public Set<Order> cancelOrder(String username, String orderTrackingNo) {
         Customer customer = customerRepo.findByName(username);
-        Optional<Order> filteredOrders = customer.getOrders().stream().filter(
-                    x -> x.getOrderTrackingNumber().equalsIgnoreCase(orderTrackingNo))
-                    .findAny();
+        Optional<Order> filteredOrders = filterOrder(orderTrackingNo, customer);
         if(filteredOrders.isPresent()){
             orderRepo.delete(filteredOrders.get());
         }
@@ -121,5 +113,13 @@ public class OrderService {
         }
         return customer.getOrders();
         
+    }
+
+    private Optional<Order> filterOrder(String orderTrackingNo, Customer customer){
+        Set<Order> customerOrders = customer.getOrders();
+        Optional<Order> filterdOrders = customerOrders.stream().filter(
+            x-> x.getOrderTrackingNumber().equalsIgnoreCase(orderTrackingNo)
+        ).findAny();
+       return filterdOrders;
     }
 }

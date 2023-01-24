@@ -3,12 +3,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.nitish.ecommerce.ecommercesite.entity.User;
 import com.nitish.ecommerce.ecommercesite.service.OrderService;
 import com.nitish.ecommerce.ecommercesite.service.UserService;
@@ -24,10 +23,15 @@ public class AdminController {
     private OrderService orderService;
 
     @GetMapping("/dashboard")
-    public String dashboard(@ModelAttribute("userName") String username,Model model){
-        model.addAttribute(username);
+    public String dashboard(Model model,
+    @RequestParam(name = "userName",required= false) String userName,
+    @RequestParam(name = "orderTrackingNo",required= false) String orderTrackingNo,
+    @RequestParam(name = "insertStatus",required= false) String insertStatus
+    ){
+        model.addAttribute("userName",userName);
+        model.addAttribute("orderTrackingNo",orderTrackingNo);
+        model.addAttribute("insertStatus",insertStatus);
         return "/admin/admin-page";
-
     }
 
     @GetMapping("/user-config")
