@@ -14,17 +14,17 @@
 <body>
 	<div th:replace="header-footer/header-fragment :: header">
     </div>
-	<div class="form form-product">
+	<div class="form form-product-desc">
 			<form action="#" th:object = "${productOrder}" 
 			th:with="user_name=${#authentication.getPrincipal().getUsername()}"
 			th:action="@{'/order/user/'+${user_name}+'/add-item/'+${orderTrackingNo}}" method="POST">
-				<div th:if="${#strings.toString(productOrder.stockStatus) == 'AVILABLE'}">
+				<div th:with="stock=${productOrder.stockStatus}" th:if="${productOrder.stockStatus.stockStatus == 'AVILABLE'}">
 					<div class="row">
 						<div class="col">
-							<h3><input type="text" th:field="*{name}" readonly></h3>
-							<img th:src="${productOrder.imageUrl}" class="img"><br>
+							<h3><input type="text" th:field="*{name}" readonly class="remove-border"></h3>
+							<img th:src="${productOrder.imageUrl}" class="img"><br><br>
 							<label class=" col-form-label">price: Rs.
-								<span><input type="text" th:field="*{unitPrice}" readonly>
+								<span><input type="text" th:field="*{unitPrice}" readonly class="remove-border">
 								</span> Per Unit
 							</label>
 						</div>
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 				</div>
-				<div th:unless="${#strings.toString(productOrder.stockStatus) == 'AVILABLE'}">
+				<div th:unless="${productOrder.stockStatus.stockStatus == 'AVILABLE'}">
 					<div class="alert alert-danger">Product is not yet avilable</div>
 				</div><br>
 				<a class="btn btn-primary" th:href="@{'/ecommercesite'+'?orderTrackingNo='+${orderTrackingNo}}">Go Back</a> <p></p>

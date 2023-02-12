@@ -34,12 +34,10 @@ public class OrderController {
 	public String getProductsOrderForm(
         @AuthenticationPrincipal MyPrincipal principal,
         @RequestParam(name = "status",required= false) boolean insertStatus,
-        @PathVariable("categoryName") String categoryName,
         @PathVariable("productName") String productName,Model model,
         @PathVariable(value = "orderTrackingNo",required = false) String orderTrackingNo
      ){
 		ProductOrder calledProduct = orderService.getProductOrder(productName);
-        System.out.println("OrderController: getProductOrderForm reached after calledProduct");
         Order order = orderService.getOrderByUserName(principal.getUsername(), orderTrackingNo);
         if(orderTrackingNo == null){
             orderTrackingNo = order.getOrderTrackingNumber();

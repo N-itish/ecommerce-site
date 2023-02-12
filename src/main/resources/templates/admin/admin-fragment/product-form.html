@@ -21,14 +21,35 @@
 				</div>
 			</div>
 
-			<label>Stock-status:</label>
-			<div class="form-group">
-				<select th:field="*{stockStatus}">
+			<div th:object="${productForm.stock}">
+				<div class="form-group">
+					<label class="col-sm-2 col-form-label">StockStatus:</label>
+					<div class="form-group">
+						<input class="form-check-input" type="radio" name="avilable" th:field="*{stockStatus}" 
+						id="avilable" value="AVILABLE" checked>
+						<label class="form-check-label" for="avilable">
+							AVILABLE
+						</label><br>
+						<input class="form-check-input" type="radio" name="out_of_stock" th:field="*{stockStatus}"
+						id="out_of_stock" value="OUT_OF_STOCK" checked>
+						<label class="form-check-label" for="out_of_stock">
+							OUT_OF_STOCK
+						</label><br>
+					</div><br>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 col-form-label">No Of Stocks:</label>
+					<div>
+						<input class="form-control" type="text" th:field="*{noOfStock}">
+					</div>
+				</div>
+		
+				<!-- <select th:field="*{stockStatus}">
 					<option
 						th:each="status: ${T(com.nitish.ecommerce.ecommercesite.entity.Product.StockStatus).values()}"
 						th:text="${status}" th:value="${status}">
 					</option>
-				</select>
+				</select> -->
 			</div><br>
 		
 			<label>Category:</label><br>

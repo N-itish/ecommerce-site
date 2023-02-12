@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.nitish.ecommerce.ecommercesite.dto.ProductForm;
+import com.nitish.ecommerce.ecommercesite.entity.Stock;
 import com.nitish.ecommerce.ecommercesite.service.ProductService;
 
 @Controller
@@ -25,6 +26,7 @@ public class ProductController {
 		@ModelAttribute("productForm") ProductForm productForm
 		) {
 		ProductForm form = productService.getProduct(productForm);
+		Stock stock = new Stock();
 		attributes.addFlashAttribute("productForm",form);
 		attributes.addAttribute("insertStatus", insertStatus);
 		return "redirect:/admin/dashboard";

@@ -2,6 +2,7 @@ package com.nitish.ecommerce.ecommercesite.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,23 +13,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Product {
-	
-	public enum StockStatus{
-		AVILABLE,
-		OUT_OF_STOCK
-	}
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	
-	@Column(columnDefinition = "ENUM('AVILABLE', 'OUT_OF_STOCK')")
-    @Enumerated(EnumType.STRING)
-	private StockStatus stockStatus;
 
 	@Column(length = 8000)
 	private String imageUrl;
@@ -40,17 +33,21 @@ public class Product {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "category_id",nullable = false)
 	private ProductCategory category;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "stockStatus_id", referencedColumnName = "id")
+	private Stock stockStatus;
+
 	public Product() {
 		super();
 	}
 
 	
 
-	public Product(long id, String name, StockStatus stockStatus, String imageUrl, String description,
+	public Product(long id, String name, Stock stockStatus, String imageUrl, String description,
 			BigDecimal unitPrice, ProductCategory category) {
 		this.id = id;
 		this.name = name;
@@ -75,10 +72,10 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public StockStatus getStockStatus() {
+	public Stock getStockStatus() {
 		return stockStatus;
 	}
-	public void setStockStatus(StockStatus stockStatus) {
+	public void setStockStatus(Stock stockStatus) {
 		this.stockStatus = stockStatus;
 	}
 	public String getImageUrl() {
