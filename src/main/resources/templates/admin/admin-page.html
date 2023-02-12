@@ -21,6 +21,7 @@
                 <a href="#" th:href = "@{'/admin/user-config'}"class="link">Users Conifg</a><br>
                 <a href="#" th:href = "@{'/admin/customer-config'}" class="link">Customer Orders</a><br>
                 <a href="#" th:href = "@{'/product/product-form'}" class="link">Add Product</a><br>
+                <a href="#" th:href = "@{'/admin/category'}" class="link">Categories</a><br>
             </ul>
         </div>
         <div class="col-sm">
@@ -43,6 +44,11 @@
 
             <div th:if="${productForm != null}">
                 <div th:replace="admin/admin-fragment/product-form :: add-product">
+                </div>
+            </div>
+
+            <div th:if="${category != null}">
+                <div th:replace="admin/admin-fragment/add-category :: admin-add-category">
                 </div>
             </div>
         </div>

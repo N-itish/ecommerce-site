@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.nitish.ecommerce.ecommercesite.entity.ProductCategory;
 import com.nitish.ecommerce.ecommercesite.entity.User;
 import com.nitish.ecommerce.ecommercesite.service.OrderService;
+import com.nitish.ecommerce.ecommercesite.service.ProductService;
 import com.nitish.ecommerce.ecommercesite.service.UserService;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")    
@@ -22,15 +26,20 @@ public class AdminController {
     @Autowired 
     private OrderService orderService;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/dashboard")
     public String dashboard(Model model,
     @RequestParam(name = "userName",required= false) String userName,
     @RequestParam(name = "orderTrackingNo",required= false) String orderTrackingNo,
-    @RequestParam(name = "insertStatus",required= false) String insertStatus
+    @RequestParam(name = "insertStatus",required= false) String insertStatus,
+    @RequestParam(name = "insertedCategory",required= false) boolean insertedCategory
     ){
         model.addAttribute("userName",userName);
         model.addAttribute("orderTrackingNo",orderTrackingNo);
         model.addAttribute("insertStatus",insertStatus);
+        model.addAttribute("insertedCategory",insertStatus);
         return "/admin/admin-page";
     }
 
@@ -59,7 +68,21 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
-    
+    @GetMapping("/category")
+    public String showCategories(RedirectAttributes redirectAttributes){
+        List<ProductCategory> category = productService.getCategories();
+        ProductCategory newCategory = new ProductCategory();
+        redirectAttributes.addFlashAttribute("category", category);
+        redirectAttributes.addFlashAttribute("newCategory",newCategory);
+        return "redirect:/admin/dashboard";
+    }
+
+    @PostMapping("/add-category")
+    public String addCategory(ProductCategory category,RedirectAttributes redirectAttributes){
+        boolean inserted = productService.addCategory(category);
+        redirectAttributes.addAttribute("insertedCategory",inserted);
+        return "redirect:/admin/dashboard";
+    }
 
     @PostMapping("/edit-user")
     public String editUser(User user,RedirectAttributes redirectAttributes){

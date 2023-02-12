@@ -63,4 +63,15 @@ public class ProductService {
         newProduct.setCategories(productCatRepo.findAll());
         return newProduct;
     }
+
+    public boolean addCategory(ProductCategory category) {
+        boolean inserted = false;
+        try{
+            productCatRepo.save(category);
+            inserted = true;
+        }catch(Exception exc){
+            exc.printStackTrace();
+        }
+        return inserted;
+    }
 }
