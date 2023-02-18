@@ -29,7 +29,6 @@ public class OrderController {
     
     @Autowired
     private OrderService orderService;
-    //order-form/'+${product.name}}+'/orderId/'+${orderTrackingNo}
     @PostMapping({"/order-form/{product_name}","/order-form/{productName}/orderId/{orderTrackingNo}"})
 	public String getProductsOrderForm(
         @AuthenticationPrincipal MyPrincipal principal,

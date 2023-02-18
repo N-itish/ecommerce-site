@@ -9,15 +9,14 @@
         <tr th:each="cat : ${category}">
             <td th:text="${cat.id}"></td>
             <td th:text="${cat.categoryName}"></td>
-            <td><button class="btn btn-danger">Remove</button></td>
+            <td><a class="btn btn-danger" th:href="@{'/admin/remove-category/'+${cat.categoryName}}">Remove</a></td>
         </tr>
    </table><br>
    <h3> Add Category:</h3><hr>
    <form th:object="${newCategory}" method="POST" th:action="@{'/admin/add-category'}">
-        <label>Id:</label>
-        <input type="text" th:field="*{id}"><br>
-        <label>Category:</label>
-        <input type="text" th:field="*{categoryName}"><br>
+        <input type="hidden" th:field="*{id}"><br>
+        <label>Category Name:</label>
+        <input type="text" th:field="*{categoryName}">
         <button type="submit" class="btn btn-primary">Add</button>
    </form>
 </div>

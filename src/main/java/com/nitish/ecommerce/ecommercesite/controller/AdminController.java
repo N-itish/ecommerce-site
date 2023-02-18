@@ -34,12 +34,12 @@ public class AdminController {
     @RequestParam(name = "userName",required= false) String userName,
     @RequestParam(name = "orderTrackingNo",required= false) String orderTrackingNo,
     @RequestParam(name = "insertStatus",required= false) String insertStatus,
-    @RequestParam(name = "insertedCategory",required= false) boolean insertedCategory
+    @RequestParam(name = "categoryStatus",required= false) boolean categoryStatus
     ){
         model.addAttribute("userName",userName);
         model.addAttribute("orderTrackingNo",orderTrackingNo);
         model.addAttribute("insertStatus",insertStatus);
-        model.addAttribute("insertedCategory",insertStatus);
+        model.addAttribute("categoryStatus",categoryStatus);
         return "/admin/admin-page";
     }
 
@@ -80,7 +80,14 @@ public class AdminController {
     @PostMapping("/add-category")
     public String addCategory(ProductCategory category,RedirectAttributes redirectAttributes){
         boolean inserted = productService.addCategory(category);
-        redirectAttributes.addAttribute("insertedCategory",inserted);
+        redirectAttributes.addAttribute("categoryStatus",inserted);
+        return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping("/remove-category/{categoryName}")
+    public String removeCategory(@PathVariable("categoryName") String categoryName,RedirectAttributes redirectAttributes){
+        boolean deleted = productService.removeCategory(categoryName);
+        redirectAttributes.addAttribute("categoryStatus",deleted);
         return "redirect:/admin/dashboard";
     }
 
