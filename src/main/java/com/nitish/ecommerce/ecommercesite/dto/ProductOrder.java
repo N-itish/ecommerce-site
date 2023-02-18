@@ -2,7 +2,7 @@ package com.nitish.ecommerce.ecommercesite.dto;
 
 import java.math.BigDecimal;
 
-import com.nitish.ecommerce.ecommercesite.entity.Product.StockStatus;
+import com.nitish.ecommerce.ecommercesite.entity.Stock;
 
 public class ProductOrder {
     private String name;
@@ -10,7 +10,7 @@ public class ProductOrder {
     private String description;
     private BigDecimal unitPrice;
     private BigDecimal quantity;
-    private StockStatus stockStatus;
+    private Stock stockStatus;
     
     
     public ProductOrder() {
@@ -18,7 +18,7 @@ public class ProductOrder {
     
 
     public ProductOrder(String name, String imageUrl, String description, BigDecimal unitPrice, BigDecimal quantity,
-            StockStatus stockStatus) {
+            Stock stockStatus) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;
@@ -71,12 +71,12 @@ public class ProductOrder {
     }
 
 
-    public StockStatus getStockStatus() {
+    public Stock getStockStatus() {
         return stockStatus;
     }
 
 
-    public void setStockStatus(StockStatus stockStatus) {
+    public void setStockStatus(Stock stockStatus) {
         this.stockStatus = stockStatus;
     }
 

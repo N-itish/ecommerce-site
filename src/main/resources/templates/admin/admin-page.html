@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+		integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link th:href="@{/styles/profile.css}" rel="stylesheet" />
+    <link th:href="@{/styles/form.css}" rel="stylesheet" />
+	<title>Admin Page</title>
+</head>
+
+<body>
+    <div th:replace="header-footer/header-fragment :: header">
+    </div>
+    <div class="row" style="margin-top: -25px;">
+        <div class="sidebar col-sm-2">
+            <h3>Admin Panel</h3>
+            <ul class="ul">
+                <a href="#" th:href = "@{'/admin/dashboard'}" class="link">Dashboard</a><br>
+                <a href="#" th:href = "@{'/admin/user-config'}"class="link">Users Conifg</a><br>
+                <a href="#" th:href = "@{'/admin/customer-config'}" class="link">Customer Orders</a><br>
+                <a href="#" th:href = "@{'/product/product-form'}" class="link">Add Product</a><br>
+                <a href="#" th:href = "@{'/admin/category'}" class="link">Categories</a><br>
+            </ul>
+        </div>
+        <div class="col-sm">
+            <div th:if="${Users_Data != null}">
+                <div th:replace="admin/admin-fragment/user-config :: admin-user-config">
+                </div>
+            </div>
+            <div th:if="${User_Data != null}">
+                <div th:replace="admin/admin-fragment/user-edit :: admin-user-edit">
+                </div>
+            </div>
+            <div th:if="${User_Orders != null}">
+                <div th:replace="admin/admin-fragment/order-config :: admin-order-config">
+                </div>
+            </div>
+            <div th:if="${Customers != null}">
+                <div th:replace="admin/admin-fragment/customer-config :: admin-customer-config">
+                </div>
+            </div>
+
+            <div th:if="${productForm != null}">
+                <div th:replace="admin/admin-fragment/product-form :: add-product">
+                </div>
+            </div>
+
+            <div th:if="${category != null}">
+                <div th:replace="admin/admin-fragment/add-category :: admin-add-category">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>

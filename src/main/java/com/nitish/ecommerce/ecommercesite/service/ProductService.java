@@ -11,6 +11,8 @@ import com.nitish.ecommerce.ecommercesite.repository.ProductCategoryRepository;
 import com.nitish.ecommerce.ecommercesite.repository.ProductRepository;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ProductService {
 
@@ -62,5 +64,28 @@ public class ProductService {
 		}
         newProduct.setCategories(productCatRepo.findAll());
         return newProduct;
+    }
+
+    public boolean addCategory(ProductCategory category) {
+        boolean inserted = false;
+        try{
+            productCatRepo.save(category);
+            inserted = true;
+        }catch(Exception exc){
+            exc.printStackTrace();
+        }
+        return inserted;
+    }
+
+    @Transactional
+    public boolean removeCategory(String categoryName) {
+        boolean deleted = false;
+        try{
+            productCatRepo.deleteByCategoryName(categoryName);
+            deleted = true;
+        }catch(Exception exc){
+            exc.printStackTrace();
+        }
+        return deleted;
     }
 }

@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.nitish.ecommerce.ecommercesite.entity.ProductCategory;
-import com.nitish.ecommerce.ecommercesite.entity.Product.StockStatus;
+import com.nitish.ecommerce.ecommercesite.entity.Stock;
 
 public class ProductForm{
 
     private String name;
     private long categoryId;
-    private StockStatus stockStatus;
+    private Stock stock;
     private String imageUrl;
     private String description;
     private BigDecimal unitPrice;
@@ -19,10 +19,10 @@ public class ProductForm{
     public ProductForm() {
     }
     
-    public ProductForm(String name, long categoryId,StockStatus stockStatus, String imageUrl, String description, BigDecimal unitPrice,
+    public ProductForm(String name, long categoryId,Stock stock, String imageUrl, String description, BigDecimal unitPrice,
         List<ProductCategory> categories) {
         this.name = name;
-        this.stockStatus = stockStatus;
+        this.stock = stock;
         this.imageUrl = imageUrl;
         this.description = description;
         this.unitPrice = unitPrice;
@@ -30,11 +30,11 @@ public class ProductForm{
         this.categoryId = categoryId;
     }
 
-    public StockStatus getStockStatus() {
-        return stockStatus;
+    public Stock getStock() {
+        return stock;
     }
-    public void setStockStatus(StockStatus stockStatus) {
-        this.stockStatus = stockStatus;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
     public String getImageUrl() {
         return imageUrl;

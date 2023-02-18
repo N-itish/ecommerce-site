@@ -11,25 +11,25 @@
 
 <body>
 	<div th:replace="header-footer/header-fragment :: header">
-    </div>
-	
+	</div>
 	<div class="container">
 		<h2>Categories:</h2><br>
-
 		<div th:each="categroy: ${categories}" style="margin-top: 20px;">
 			<h4 th:text="${categroy.categoryName}"></h4><br>
-			<div class="row">
+			<div class="row flex-row flex-nowrap overflow-auto">
 				<div th:each="product: ${categroy.products}" class="col-sm">
-					<span class="card" style="width: 18rem;">
-						<img class="card-img-top" th:src="${product.imageUrl}" th:alt="${product.name}">
-						<div class="card-body">
-							<h5 class="card-title" th:text="${product.name}">Default Title</h5>
-							<p class="card-text" th:text="${product.description}">Default Description</p>
+					<div class="card" style="width: 18rem;">
+						<img class="img" th:src="${product.imageUrl}" th:alt="${product.name}">	
+						<div class="card-body"><br>
+							<h5 class="card-title" th:text="${product.name}">Default Title</h5><span class="price" >
+								Rs.<span th:text="${product.unitPrice}">
+								</span>
+							</span><br> <br>
 							<a href="#" class="btn btn-primary"
-								th:href="@{'/order/order-form/'+${product.name}}+'/orderId/'+${orderTrackingNo}">Buy</a>
+								th:href="@{'/order/order-form/'+${product.name}+'/orderId/'+${orderTrackingNo}}">Buy</a>
 						</div>
-					</span>
-				</div><br>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,82 @@
+<div th:fragment="add-product" th:object="${productForm}" class="form form-product">
+    <h3 class="header">Add Product</h3>
+    <form action="#" th:action="@{/product/add-product}" method="POST">
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label" for="name">Name:</label>
+            <div>
+                <input class="form-control" type="text" th:field="*{name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Image Url:</label>
+            <div>
+                <input class="form-control" type="text" th:field="*{imageUrl}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Price:</label>
+            <div>
+                <input class="form-control" type="text" th:field="*{unitPrice}">
+            </div>
+        </div>
+
+        <div th:object="${productForm.stock}">
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">StockStatus:</label>
+                <div class="form-group">
+                    <input class="form-check-input" type="radio" name="avilable" th:field="*{stockStatus}" 
+                    id="avilable" value="AVILABLE" checked>
+                    <label class="form-check-label" for="avilable">
+                        AVILABLE
+                    </label><br>
+                    <input class="form-check-input" type="radio" name="out_of_stock" th:field="*{stockStatus}"
+                    id="out_of_stock" value="OUT_OF_STOCK" checked>
+                    <label class="form-check-label" for="out_of_stock">
+                        OUT_OF_STOCK
+                    </label><br>
+                </div><br>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 col-form-label">No Of Stocks:</label>
+                <div>
+                    <input class="form-control" type="text" th:field="*{noOfStock}">
+                </div>
+            </div>
+    
+            <!-- <select th:field="*{stockStatus}">
+                <option
+                    th:each="status: ${T(com.nitish.ecommerce.ecommercesite.entity.Product.StockStatus).values()}"
+                    th:text="${status}" th:value="${status}">
+                </option>
+            </select> -->
+        </div><br>
+    
+        <label>Category:</label><br>
+        <div class="form-group">
+             <select th:field="*{categoryId}">
+                <option th:each="cat : ${productForm.categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
+            </select>
+        </div><br>
+
+        <!-- 
+            Only here as a stub since items whose th:field is not present is not sent to backend  
+            so if this is not there categories field will be null in backend
+        -->
+        <div>
+            <input type="hidden" th:field="*{categories}">
+        </div>
+
+        <div>
+            <label>Description:</label><br>
+            <textarea rows="12" cols= "100" class="form-group row-sm" th:field="*{description}">
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button><br>
+        <div th:if="${productForm.name != null}">
+            <div th:if="${insertStatus}" class="alert alert-success">Saved Successfully</div>
+            <div th:unless="${insertStatus}" class="alert alert-danger">Please try Again</div>
+        </div>
+
+    </form>
+</div>
