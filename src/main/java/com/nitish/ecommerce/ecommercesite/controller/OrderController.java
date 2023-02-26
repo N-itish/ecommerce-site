@@ -41,6 +41,7 @@ public class OrderController {
         if(orderTrackingNo == null){
             orderTrackingNo = order.getOrderTrackingNumber();
         }
+        System.out.println(orderTrackingNo);
         model.addAttribute("orderPurchaseStatus", order.isOrderPurchased());
 		model.addAttribute("productOrder", calledProduct);
         model.addAttribute("orderTrackingNo", orderTrackingNo);
@@ -57,18 +58,14 @@ public class OrderController {
      ){
         OrderItem item = mapper.map(productOrder, OrderItem.class);
         boolean insertedStatus = false;
-        String ordTrcNo = null;
-        try {
-            ordTrcNo = this.orderService.addItemNew(username,orderTrackingNo,item);
-            insertedStatus = true;
+        try { 
+             orderTrackingNo = orderService.addItemNew(username, orderTrackingNo, item);
+             insertedStatus = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        attributes.addAttribute("orderTrackingNo",ordTrcNo);
         attributes.addAttribute("insertStatus",insertedStatus);
-        //redirecting the user to the main page after inserting item
-        return "redirect:/admin/dashboard";
-
+        return "redirect:/order/order-form/"+item.getName()+"/orderId/"+orderTrackingNo;
     }
 
     @PostMapping("/purchase/user/{userName}/orderId/{orderTrackingNumber}")

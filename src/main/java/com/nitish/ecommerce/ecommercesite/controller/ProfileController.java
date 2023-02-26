@@ -38,7 +38,7 @@ public class ProfileController {
 
 	@GetMapping("/user/{userName}")
 	public String getProfileFragment(@PathVariable String userName,RedirectAttributes attr, Model model){
-		Customer customer =  userService.getUserByUserName(userName);
+		Customer customer =  userService.getCustomerByName(userName);
 		attr.addFlashAttribute("customer", customer);
 		return "redirect:/profile/dashboard";
 	}

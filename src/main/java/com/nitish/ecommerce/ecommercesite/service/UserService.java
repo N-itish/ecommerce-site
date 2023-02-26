@@ -47,8 +47,11 @@ public class UserService{
         customerRepo.save(customer);
     } 
 
-    public Customer getUserByUserName(String userName){
+    public Customer getCustomerByName(String userName){
         Customer customer = customerRepo.findByName(userName);
+        if(customer == null){
+            customer = new Customer();
+        }
         return customer;
     }
 

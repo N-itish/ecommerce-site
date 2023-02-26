@@ -79,16 +79,14 @@ public class AdminController {
 
     @PostMapping("/add-category")
     public String addCategory(ProductCategory category,RedirectAttributes redirectAttributes){
-        boolean inserted = productService.addCategory(category);
-        redirectAttributes.addAttribute("categoryStatus",inserted);
-        return "redirect:/admin/dashboard";
+        productService.addCategory(category);
+        return "redirect:/admin/category";
     }
 
     @GetMapping("/remove-category/{categoryName}")
     public String removeCategory(@PathVariable("categoryName") String categoryName,RedirectAttributes redirectAttributes){
-        boolean deleted = productService.removeCategory(categoryName);
-        redirectAttributes.addAttribute("categoryStatus",deleted);
-        return "redirect:/admin/dashboard";
+        productService.removeCategory(categoryName);
+        return "redirect:/admin/category";
     }
 
     @PostMapping("/edit-user")
