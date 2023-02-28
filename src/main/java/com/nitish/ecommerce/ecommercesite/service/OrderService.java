@@ -100,19 +100,12 @@ public class OrderService {
         return order;
     }
 
-    public Set<Order> cancelOrder(String username, String orderTrackingNo) {
-        Customer customer = customerRepo.findByName(username);
-        Optional<Order> filteredOrders = filterOrder(orderTrackingNo, customer);
-        if(filteredOrders.isPresent()){
-            orderRepo.delete(filteredOrders.get());
-        }
-        //refreshing the list
-        customer = customerRepo.findByName(username);
-        for(Order order: customer.getOrders()){
-            System.out.println(order.getOrderTrackingNumber());
-        }
-        return customer.getOrders();
-        
+    public void cancelOrder(String username, String orderTrackingNo) {
+         Customer customer = customerRepo.findByName(username);
+         Optional<Order> filteredOrders = filterOrder(orderTrackingNo, customer);
+         if(filteredOrders.isPresent()){
+            orderRepo.delete( filteredOrders.get());
+         }
     }
 
     private Optional<Order> filterOrder(String orderTrackingNo, Customer customer){

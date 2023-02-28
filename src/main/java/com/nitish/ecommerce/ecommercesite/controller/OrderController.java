@@ -83,9 +83,7 @@ public class OrderController {
         @PathVariable("username") String username,
         @PathVariable("orderTrackingNo") String orderTrackingNo,
         RedirectAttributes attributes){
-            attributes.addFlashAttribute("User_Orders",
-            orderService.cancelOrder(username,orderTrackingNo));
-
-        return "redirect:/admin/dashboard";
+        orderService.cancelOrder(username,orderTrackingNo);
+        return "redirect:/admin/order-config/user/"+username;
     }
 }

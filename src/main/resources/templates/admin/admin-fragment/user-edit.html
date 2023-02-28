@@ -20,7 +20,9 @@
             <label for="name" class="col-sm-2 col-form-label">Role:</label>
             <input type="text" class="form-control" th:field="*{role}"><br>
         </div><br>
-        <button class="btn btn-primary" style="float: right;" type="submit">Edit</button>
-        
+        <button class="btn btn-primary" style="float: right;" type="submit">Edit</button><br><BR>
+        <div th:if="${status}">
+            <div class="alert alert-success">Updated User!!!</div>
+        </div>
     </form>
 </div>

@@ -33,12 +33,12 @@ public class AdminController {
     public String dashboard(Model model,
     @RequestParam(name = "userName",required= false) String userName,
     @RequestParam(name = "orderTrackingNo",required= false) String orderTrackingNo,
-    @RequestParam(name = "insertStatus",required= false) String insertStatus,
+    @RequestParam(name = "status",required= false) String status,
     @RequestParam(name = "categoryStatus",required= false) boolean categoryStatus
     ){
         model.addAttribute("userName",userName);
         model.addAttribute("orderTrackingNo",orderTrackingNo);
-        model.addAttribute("insertStatus",insertStatus);
+        model.addAttribute("status",status);
         model.addAttribute("categoryStatus",categoryStatus);
         return "/admin/admin-page";
     }
@@ -91,7 +91,8 @@ public class AdminController {
 
     @PostMapping("/edit-user")
     public String editUser(User user,RedirectAttributes redirectAttributes){
-        userService.saveUser(user);
+        boolean isUpdated = userService.saveUser(user);
+        redirectAttributes.addAttribute("status",isUpdated);
         redirectAttributes.addFlashAttribute("User_Data",user);
         return "redirect:/admin/dashboard";
     }

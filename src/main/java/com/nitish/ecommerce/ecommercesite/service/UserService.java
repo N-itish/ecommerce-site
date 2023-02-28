@@ -67,8 +67,16 @@ public class UserService{
         return userRepo.findByName(userName);
     }
 
-    public void saveUser(User user) {
+    public boolean saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepo.save(user);
+        boolean updated = false;
+        try{
+            userRepo.save(user);
+            updated = true;
+        }catch(Exception exc)
+        {
+            exc.printStackTrace();
+        }
+        return updated;
     }
 }
